@@ -8,10 +8,10 @@ set cpo&vim
 
 let g:auto_save=0
 
-set updatetime=330
+set updatetime=200
 au CursorHold,InsertLeave * call AutoSave()
 command! AutoSaveToggle :call ToggleAutoSave()
-nmap \ast :AutoSaveToggle<CR>
+nmap <Leader>ast :AutoSaveToggle<CR>
 
 function! AutoSave()
   if g:auto_save >= 1
