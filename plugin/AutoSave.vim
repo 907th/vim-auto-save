@@ -6,24 +6,25 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:auto_save_file=0
+let g:auto_save=0
 
 set updatetime=330
-au CursorHold,InsertLeave * call AutoSaveFile()
-nmap <F12> :call ToggleAutoSaveFile()<CR>
+au CursorHold,InsertLeave * call AutoSave()
+command! AutoSaveToggle :call ToggleAutoSave()
+nmap \ast :AutoSaveToggle<CR>
 
-function! AutoSaveFile()
-  if g:auto_save_file >= 1
+function! AutoSave()
+  if g:auto_save >= 1
     silent! wa
   endif
 endfunction
 
-function! ToggleAutoSaveFile()
-  if g:auto_save_file >= 1
-    let g:auto_save_file = 0
+function! ToggleAutoSave()
+  if g:auto_save >= 1
+    let g:auto_save = 0
     echo "AutoSave is OFF"
   else
-    let g:auto_save_file = 1
+    let g:auto_save = 1
     echo "AutoSave is ON"
   endif
 endfunction
