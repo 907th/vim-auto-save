@@ -6,11 +6,11 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let g:auto_save=0
+let g:auto_save = 0
 
 set updatetime=200
 au CursorHold,InsertLeave * call AutoSave()
-command! AutoSaveToggle :call ToggleAutoSave()
+command! AutoSaveToggle :call AutoSaveToggle()
 nmap <Leader>ast :AutoSaveToggle<CR>
 
 function! AutoSave()
@@ -19,7 +19,7 @@ function! AutoSave()
   endif
 endfunction
 
-function! ToggleAutoSave()
+function! AutoSaveToggle()
   if g:auto_save >= 1
     let g:auto_save = 0
     echo "AutoSave is OFF"
