@@ -1,6 +1,6 @@
 " ============================================================================
 " File:         AutoSave.vim
-" Last Changed: 2012-11-12
+" Last Changed: 2012-12-10
 " ============================================================================
 
 let s:save_cpo = &cpo
@@ -11,7 +11,7 @@ let g:auto_save = 0
 set updatetime=200
 au CursorHold,InsertLeave * call AutoSave()
 command! AutoSaveToggle :call AutoSaveToggle()
-nmap <Leader>ast :AutoSaveToggle<CR>
+nmap <Leader>as :AutoSaveToggle<CR>
 
 function! AutoSave()
   if g:auto_save >= 1
