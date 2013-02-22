@@ -11,7 +11,6 @@ let g:auto_save = 0
 set updatetime=200
 au CursorHold,InsertLeave * call AutoSave()
 command! AutoSaveToggle :call AutoSaveToggle()
-nmap <Leader>as :AutoSaveToggle<CR>
 
 function! AutoSave()
   if g:auto_save >= 1
