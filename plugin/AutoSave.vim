@@ -1,3 +1,10 @@
+"======================================
+"    Script Name:  vim-auto-save
+"    Plugin Name:  AutoSave
+"        Version:  0.1.1
+"  Last Modified:  13.04.2013 15:08
+"======================================
+
 let s:save_cpo = &cpo
 set cpo&vim
 
