@@ -1,5 +1,5 @@
 "======================================
-"    Script Name:  vim-auto-save
+"    Script Name:  vim-auto-save (http://www.vim.org/scripts/script.php?script_id=4521)
 "    Plugin Name:  AutoSave
 "        Version:  0.1.1
 "  Last Modified:  13.04.2013 15:08
