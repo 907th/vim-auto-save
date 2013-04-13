@@ -1,8 +1,3 @@
-" ============================================================================
-" File:         AutoSave.vim
-" Last Changed: 2012-12-10
-" ============================================================================
-
 let s:save_cpo = &cpo
 set cpo&vim
 
@@ -14,7 +9,11 @@ command! AutoSaveToggle :call AutoSaveToggle()
 
 function! AutoSave()
   if g:auto_save >= 1
+    let was_modified = &modified
     silent! wa
+    if was_modified && !&modified
+      echo "(AutoSaved at " . strftime("%T") . ")"
+    endif
   endif
 endfunction
 
