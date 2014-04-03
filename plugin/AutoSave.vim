@@ -1,8 +1,8 @@
 "======================================
 "    Script Name:  vim-auto-save (http://www.vim.org/scripts/script.php?script_id=4521)
 "    Plugin Name:  AutoSave
-"        Version:  0.1.3
-"  Last Modified:  06.05.2013 23:10
+"        Version:  0.1.4
+"  Last Modified:  03.04.2014 09:53
 "======================================
 
 if exists("g:auto_save_loaded")
@@ -26,7 +26,7 @@ if g:auto_save_no_updatetime == 0
   set updatetime=200
 endif
 
-au CursorHold,InsertLeave * call AutoSave()
+au CursorHold,CursorHoldI,InsertLeave * call AutoSave()
 command! AutoSaveToggle :call AutoSaveToggle()
 
 function! AutoSave()
