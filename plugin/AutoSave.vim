@@ -34,7 +34,7 @@ function! AutoSave()
     let was_modified = &modified
     silent! wa
     if was_modified && !&modified
-      echo "(AutoSaved at " . strftime("%T") . ")"
+      echo "(AutoSaved at " . strftime("%H:%M:%S") . ")"
     endif
   endif
 endfunction
