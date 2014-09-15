@@ -31,6 +31,20 @@ let g:auto_save_no_updatetime = 1  " do not change the 'updatetime' option
 
 ```
 
+AutoSave will display on the status line on each auto-save by default. 
+
+```
+(AutoSaved at 08:40:55)
+```
+
+You can silence the display with the `g:auto_save_silent` option:
+
+```VimL
+" .vimrc
+let g:auto_save_silent = 1  "do not display the auto-save notification
+
+```
+
 ## License
 
 Distributed under the MIT License (see LICENSE.txt).
