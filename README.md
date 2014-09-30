@@ -30,6 +30,14 @@ let g:auto_save_no_updatetime = 1  " do not change the 'updatetime' option
 
 ```
 
+You can disable AutoSave in insert mode with the `g:auto_save_in_insert_mode` option:
+
+```VimL
+" .vimrc
+let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
+
+```
+
 AutoSave will display on the status line on each auto-save by default.
 
 ```

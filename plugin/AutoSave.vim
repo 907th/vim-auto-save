@@ -21,6 +21,10 @@ if !exists("g:auto_save_no_updatetime")
   let g:auto_save_no_updatetime = 0
 endif
 
+if !exists("g:auto_save_in_insert_mode")
+  let g:auto_save_in_insert_mode = 1
+endif
+
 if g:auto_save_no_updatetime == 0
   set updatetime=200
 endif
@@ -29,7 +33,11 @@ if !exists("g:auto_save_silent")
   let g:auto_save_silent = 0
 endif
 
-au CursorHold,CursorHoldI,InsertLeave * call AutoSave()
+if g:auto_save_in_insert_mode == 1
+  au CursorHoldI * call AutoSave()
+endif
+
+au CursorHold,InsertLeave * call AutoSave()
 command! AutoSaveToggle :call AutoSaveToggle()
 
 function! AutoSave()
