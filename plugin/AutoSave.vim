@@ -1,7 +1,7 @@
 "======================================
 "    Script Name:  vim-auto-save (http://www.vim.org/scripts/script.php?script_id=4521)
 "    Plugin Name:  AutoSave
-"        Version:  0.1.5
+"        Version:  0.1.6
 "======================================
 
 if exists("g:auto_save_loaded")
