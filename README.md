@@ -56,7 +56,7 @@ If you need an autosave hook (such as generating tags post-save) then use `g:aut
 
 ```VimL
 " .vimrc
-let g:auto_save_postsave_hook = "TagsGenerate"  " this will run ":TagsGenerate" after each save
+let g:auto_save_postsave_hook = 'TagsGenerate'  " this will run :TagsGenerate after each save
 
 ```
 
