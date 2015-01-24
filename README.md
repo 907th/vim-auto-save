@@ -52,6 +52,14 @@ let g:auto_save_silent = 1  " do not display the auto-save notification
 
 ```
 
+If you need an autosave hook (such as generating tags post-save) then use `g:auto_save_postsave_hook` option:
+
+```VimL
+" .vimrc
+let g:auto_save_postsave_hook = 'TagsGenerate'  " this will run :TagsGenerate after each save
+
+```
+
 ## Contribution
 
 Development is made in [907th/vim-auto-save](https://github.com/907th/vim-auto-save) repo.  
