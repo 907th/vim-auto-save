@@ -69,4 +69,4 @@ Feel free to contribute!
 
 Distributed under the MIT License (see LICENSE.txt).
 
-Copyright (c) 2013-2014 Alexey Chernenkov
+Copyright (c) 2013-2015 Alexey Chernenkov
