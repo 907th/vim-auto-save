@@ -47,11 +47,13 @@ function! AutoSave()
   if g:auto_save >= 1
     let was_modified = &modified
     silent! wa
-    if was_modified && !&modified && g:auto_save_silent == 0
+    if was_modified && !&modified
       if exists("g:auto_save_postsave_hook")
         execute "" . g:auto_save_postsave_hook
       endif
-      echo "(AutoSaved at " . strftime("%H:%M:%S") . ")"
+      if g:auto_save_silent == 0
+        echo "(AutoSaved at " . strftime("%H:%M:%S") . ")"
+      endif
     endif
   endif
 endfunction
