@@ -57,7 +57,13 @@ If you need an autosave hook (such as generating tags post-save) then use `g:aut
 ```VimL
 " .vimrc
 let g:auto_save_postsave_hook = 'TagsGenerate'  " this will run :TagsGenerate after each save
+```
 
+The events on which AutoSave will perform a save can also be adjusted using the `g:auto_save_events` option.
+Using `InsertLeave` and `TextChanged` only, for example, will save on every change in normal mode.
+
+```.VimL
+let g:auto_save_events = ["InsertLeave", "TextChanged"]
 ```
 
 ## Contribution

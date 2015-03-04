@@ -33,12 +33,19 @@ if !exists("g:auto_save_silent")
   let g:auto_save_silent = 0
 endif
 
+if !exists("g:auto_save_events")
+  let g:auto_save_events = [ "CursorHold", "InsertLeave" ]
+endif
+
 augroup auto_save
   autocmd!
   if g:auto_save_in_insert_mode == 1
-    au CursorHoldI,CompleteDone * nested call AutoSave()
+    let g:auto_save_events = g:auto_save_events + [ "CursorHoldI", "CompleteDone" ]
   endif
-  au CursorHold,InsertLeave * nested call AutoSave()
+
+  for event in g:auto_save_events
+    execute "au " . expand(event) . " * nested call AutoSave()"
+  endfor
 augroup END
 
 command! AutoSaveToggle :call AutoSaveToggle()
