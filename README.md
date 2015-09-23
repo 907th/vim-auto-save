@@ -66,6 +66,18 @@ Using `InsertLeave` and `TextChanged` only, for example, will save on every chan
 let g:auto_save_events = ["InsertLeave", "TextChanged"]
 ```
 
+This options default value is 1. It fixes the [selecting your pasted
+text](http://vim.wikia.com/wiki/Selecting_your_pasted_text) mapping. Without
+it, the mapping will select the whole buffer, because a write operation sets
+the `'[` and `']` marks respectively to the start and end of the buffer. If you
+want vims default behavior, set the options value to 0:
+
+```VimL
+let g:auto_save_keep_marks = 0 " Don't keep the '[ and '] marks. It will break
+                               " the selecting your pasted text mapping:
+                               " http://vim.wikia.com/wiki/Selecting_your_pasted_text
+```
+
 ## Contribution
 
 Development is made in [907th/vim-auto-save](https://github.com/907th/vim-auto-save) repo.  

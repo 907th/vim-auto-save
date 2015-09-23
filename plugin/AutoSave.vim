@@ -37,6 +37,10 @@ if !exists("g:auto_save_events")
   let g:auto_save_events = [ "CursorHold", "InsertLeave" ]
 endif
 
+if !exists("g:auto_save_keep_marks")
+  let g:auto_save_keep_marks = 1
+endif
+
 augroup auto_save
   autocmd!
   if g:auto_save_in_insert_mode == 1
@@ -53,7 +57,15 @@ command! AutoSaveToggle :call AutoSaveToggle()
 function! AutoSave()
   if g:auto_save >= 1
     let was_modified = &modified
-    silent! wa
+    if g:auto_save_keep_marks >= 1
+      let first_char_pos = getpos("'[")
+      let last_char_pos = getpos("']")
+      silent! wa
+      call setpos("'[", first_char_pos)
+      call setpos("']", last_char_pos)
+    else
+      silent! wa
+    endif
     if was_modified && !&modified
       if exists("g:auto_save_postsave_hook")
         execute "" . g:auto_save_postsave_hook
