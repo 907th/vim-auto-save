@@ -56,6 +56,12 @@ command! AutoSaveToggle :call AutoSaveToggle()
 
 function! AutoSave()
   if g:auto_save >= 1
+
+    let currentmode = mode()
+    if currentmode == 'i' && g:auto_save_in_insert_mode != 1
+      return
+    endif
+
     let was_modified = &modified
     if g:auto_save_keep_marks >= 1
       let first_char_pos = getpos("'[")
