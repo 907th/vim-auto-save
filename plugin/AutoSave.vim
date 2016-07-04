@@ -26,7 +26,7 @@ if !exists("g:auto_save_in_insert_mode")
 endif
 
 if g:auto_save_no_updatetime == 0
-  set updatetime=200
+  set updatetime=1000
 endif
 
 if !exists("g:auto_save_silent")
