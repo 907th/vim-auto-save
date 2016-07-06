@@ -20,7 +20,7 @@ let g:auto_save = 1  " enable AutoSave on Vim startup
 
 ```
 
-AutoSave relies on `CursorHold` event and sets the `updatetime` option to 200 so that modifications are saved almost instantly.  
+AutoSave relies on `CursorHold` event and sets the `updatetime` option to 1000 so that modifications are saved every second.  
 But sometimes changing the `updatetime` option may affect other plugins and break things.  
 You can prevent AutoSave from changing the `updatetime` with `g:auto_save_no_updatetime` option:
 
