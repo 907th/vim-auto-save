@@ -62,9 +62,12 @@ let updatetime=200
 let g:auto_save_events = [ "CursorHold", "CursorHoldI", "CompleteDone", "InsertLeave" ]
 ```
 
-This options default value is 1. It fixes the [selecting your pasted
-text](http://vim.wikia.com/wiki/Selecting_your_pasted_text) mapping. Without
-it, the mapping will select the whole buffer, because a write operation sets
+The `g:auto_save_keep_marks` option preserves marks that are used to remember start
+and end position of the last changed or yanked text (`:h '[`).
+This also fixes the behavior for common mappings that depend on these marks,
+like the [selecting your pasted text](http://vim.wikia.com/wiki/Selecting_your_pasted_text) mapping.
+This options default value is `1`.
+Without it, the mapping will select the whole buffer, because a write operation sets
 the `'[` and `']` marks respectively to the start and end of the buffer. If you
 want vims default behavior, set the options value to 0:
 
@@ -73,11 +76,11 @@ let g:auto_save_keep_marks = 0 " Don't keep the '[ and '] marks. It will break
                                " the selecting your pasted text mapping:
                                " http://vim.wikia.com/wiki/Selecting_your_pasted_text
 ```
-By default only the current buffer is written. You can choose that all buffers are written on autosave using the `g:auto_save_write_all_buffers` option.
+By default only the current buffer is written (like `:w`). You can choose that all buffers are written on autosave using the `g:auto_save_write_all_buffers` option (like `:wa`).
 
 ```VimL
 let g:auto_save_write_all_buffers = 1 " Setting this option to 1 will write all
-                                      " will write to all open buffers as if you would use
+                                      " open buffers as if you would use
                                       " :wa on the vim command line.
 ```
 
