@@ -17,16 +17,12 @@ if !exists("g:auto_save")
   let g:auto_save = 0
 endif
 
-if !exists("g:auto_save_in_insert_mode")
-  let g:auto_save_in_insert_mode = 1
-endif
-
 if !exists("g:auto_save_silent")
   let g:auto_save_silent = 0
 endif
 
 if !exists("g:auto_save_events")
-  let g:auto_save_events = [ "CursorHold", "InsertLeave" ]
+  let g:auto_save_events = [ "InsertLeave", "TextChanged" ]
 endif
 
 if !exists("g:auto_save_keep_marks")
@@ -39,10 +35,6 @@ endif
 
 augroup auto_save
   autocmd!
-  if g:auto_save_in_insert_mode == 1
-    let g:auto_save_events = g:auto_save_events + [ "CursorHoldI", "CompleteDone" ]
-  endif
-
   for event in g:auto_save_events
     execute "au " . event . " * nested call AutoSave()"
   endfor
