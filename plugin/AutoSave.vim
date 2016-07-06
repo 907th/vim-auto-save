@@ -17,16 +17,8 @@ if !exists("g:auto_save")
   let g:auto_save = 0
 endif
 
-if !exists("g:auto_save_no_updatetime")
-  let g:auto_save_no_updatetime = 0
-endif
-
 if !exists("g:auto_save_in_insert_mode")
   let g:auto_save_in_insert_mode = 1
-endif
-
-if g:auto_save_no_updatetime == 0
-  set updatetime=1000
 endif
 
 if !exists("g:auto_save_silent")
