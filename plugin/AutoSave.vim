@@ -41,6 +41,10 @@ if !exists("g:auto_save_keep_marks")
   let g:auto_save_keep_marks = 1
 endif
 
+if !exists("g:auto_save_write_all_buffers")
+  let g:auto_save_write_all_buffers = 0
+endif
+
 augroup auto_save
   autocmd!
   if g:auto_save_in_insert_mode == 1
@@ -63,11 +67,11 @@ function! AutoSave()
     if g:auto_save_keep_marks >= 1
       let first_char_pos = getpos("'[")
       let last_char_pos = getpos("']")
-      silent! wa
+      call DoSave()
       call setpos("'[", first_char_pos)
       call setpos("']", last_char_pos)
     else
-      silent! wa
+      call DoSave()
     endif
     if was_modified && !&modified
       if exists("g:auto_save_postsave_hook")
@@ -77,6 +81,14 @@ function! AutoSave()
         echo "(AutoSaved at " . strftime("%H:%M:%S") . ")"
       endif
     endif
+  endif
+endfunction
+
+function! DoSave()
+  if g:auto_save_write_all_buffers >= 1
+    silent! wa
+  else
+    silent! w
   endif
 endfunction
 

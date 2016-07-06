@@ -77,6 +77,13 @@ let g:auto_save_keep_marks = 0 " Don't keep the '[ and '] marks. It will break
                                " the selecting your pasted text mapping:
                                " http://vim.wikia.com/wiki/Selecting_your_pasted_text
 ```
+By default only the current buffer is written. You can choose that all buffers are written on autosave using the `g:auto_save_write_all_buffers` option.
+
+```VimL
+let g:auto_save_write_all_buffers = 1 " Setting this option to 1 will write all
+                                      " will write to all open buffers as if you would use
+                                      " :wa on the vim command line.
+```
 
 ## Contribution
 
