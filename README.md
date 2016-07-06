@@ -2,9 +2,11 @@
 
 ## Description
 
-AutoSave - automatically save changes to disk without having to use `:w` (or any binding to it) every time a buffer has been modified.
+AutoSave - automatically save changes to disk without having to use `:w` (or any binding to it) every time a buffer has been modified or based on your preferred events.
 
 Inspired by the same feature in RubyMine text editor.
+
+By default AutoSave will save every time something has been changed in normal mode and when the user leaves insert mode. This configuration is a mix between "save as often as possible" and "try to avoid breaking other plugins that depend on filewrite-events". 
 
 ## Installation and Usage
 
@@ -20,22 +22,6 @@ let g:auto_save = 1  " enable AutoSave on Vim startup
 
 ```
 
-AutoSave in the default configuration relies on the `CursorHold` event. The `CursorHold` event relies on the `updatetime` option. To have almost instantaneous autosave behavior set the `updatetime` option to a value like 200 milliseconds.
-
-```VimL
-".vimrc
-set updatetime=200
-```
-
-But be advised that changing the `updatetime` option may affect other plugins and break things.
-
-You can disable AutoSave in insert mode with the `g:auto_save_in_insert_mode` option:
-
-```VimL
-" .vimrc
-let g:auto_save_in_insert_mode = 0  " do not save while in insert mode
-
-```
 
 AutoSave will display on the status line on each auto-save by default.
 
@@ -58,11 +44,22 @@ If you need an autosave hook (such as generating tags post-save) then use `g:aut
 let g:auto_save_postsave_hook = 'TagsGenerate'  " this will run :TagsGenerate after each save
 ```
 
-The events on which AutoSave will perform a save can also be adjusted using the `g:auto_save_events` option.
-Using `InsertLeave` and `TextChanged` only, for example, will save on every change in normal mode.
+The events on which AutoSave will perform a save can be adjusted using the `g:auto_save_events` option.
+Using `InsertLeave` and `TextChanged` only, the default, will save on every change in normal mode and every time you leave insert mode.
 
 ```.VimL
 let g:auto_save_events = ["InsertLeave", "TextChanged"]
+```
+
+Using `CursorHold` will additionally save every amount of milliseconds as defined in the `updatetime` option in normal mode.
+`CursorHoldI` will do the same thing in insert mode. `CompleteDone` will also trigger a save after every completion event. See the autocommands overview for a complete listing (`:h autocommand-events`).
+
+Be advised to be careful with the `updatetime` option since it has shown to cause problems when set too small. 200 seems already to be too small to work with certain other plugins. Use 1000 for a more conservative setting.
+
+```.VimL
+".vimrc
+let updatetime=200
+let g:auto_save_events = [ "CursorHold", "CursorHoldI", "CompleteDone", "InsertLeave" ]
 ```
 
 This options default value is 1. It fixes the [selecting your pasted
