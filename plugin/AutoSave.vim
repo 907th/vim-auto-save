@@ -44,7 +44,10 @@ endif
 augroup auto_save
   autocmd!
   if g:auto_save_in_insert_mode == 1
-    let g:auto_save_events = g:auto_save_events + [ "CursorHoldI", "CompleteDone" ]
+    let g:auto_save_events = g:auto_save_events + [ "CursorHoldI" ]
+    if v:version > 703 || v:version == 703 && has('patch598')
+        let g:auto_save_events = g:auto_save_events + [ "CompleteDone" ]
+    endif
   endif
 
   for event in g:auto_save_events
