@@ -33,6 +33,17 @@ if !exists("g:auto_save_write_all_buffers")
   let g:auto_save_write_all_buffers = 0
 endif
 
+"Check if user added the CompleteDone event which is known to
+"cause problems for certain vim versions.
+if !(v:version > 703 || v:version == 703 && has('patch598'))
+  let completeDoneIndex = index(g:auto_save_events,"CompleteDone")
+  if (completeDoneIndex >= 0)
+    call remove(g:auto_save_events,completeDoneIndex)
+    echo "(AutoSave) Save on CompleteDone is not supported for your vim version."
+    echo "(AutoSave) CompleteDone was removed from g:auto_save_events variable."
+  endif
+endif
+
 augroup auto_save
   autocmd!
   for event in g:auto_save_events
