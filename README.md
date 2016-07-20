@@ -87,24 +87,6 @@ let g:auto_save_postsave_hook = 'TagsGenerate'  " this will run :TagsGenerate
                                                 " after each save
 ```
 
-## Keep Marks
-
-The `g:auto_save_keep_marks` option preserves marks that are used to remember start
-and end position of the last changed or yanked text (`:h '[`).
-This also fixes the behavior for common mappings that depend on these marks,
-like the [selecting your pasted text](http://vim.wikia.com/wiki/Selecting_your_pasted_text)
-mapping.
-This options default value is `1`. Without it, the mapping will select the 
-whole buffer, because a write operation sets the `'[` and `']` marks 
-respectively to the start and end of the buffer. If you
-want vims default behavior, set the options value to 0:
-
-```VimL
-let g:auto_save_keep_marks = 0 " Don't keep the '[ and '] marks. It will break
-                               " the selecting your pasted text mapping:
-                               " http://vim.wikia.com/wiki/Selecting_your_pasted_text
-```
-
 ## Write to All Buffers
 
 By default only the current buffer is written (like `:w`). You can choose that

@@ -25,10 +25,6 @@ if !exists("g:auto_save_events")
   let g:auto_save_events = [ "InsertLeave", "TextChanged" ]
 endif
 
-if !exists("g:auto_save_keep_marks")
-  let g:auto_save_keep_marks = 1
-endif
-
 if !exists("g:auto_save_write_all_buffers")
   let g:auto_save_write_all_buffers = 0
 endif
@@ -56,15 +52,15 @@ command! AutoSaveToggle :call AutoSaveToggle()
 function! AutoSave()
   if g:auto_save >= 1
     let was_modified = &modified
-    if g:auto_save_keep_marks >= 1
-      let first_char_pos = getpos("'[")
-      let last_char_pos = getpos("']")
-      call DoSave()
-      call setpos("'[", first_char_pos)
-      call setpos("']", last_char_pos)
-    else
-      call DoSave()
-    endif
+
+    " preserve marks that are used to remember start and 
+    " end position of the last changed or yanked text (`:h '[`).
+    let first_char_pos = getpos("'[")
+    let last_char_pos = getpos("']")
+    call DoSave()
+    call setpos("'[", first_char_pos)
+    call setpos("']", last_char_pos)
+
     if was_modified && !&modified
       if exists("g:auto_save_postsave_hook")
         execute "" . g:auto_save_postsave_hook
