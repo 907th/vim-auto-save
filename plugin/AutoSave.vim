@@ -13,9 +13,6 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-if !exists("g:auto_save")
-  let g:auto_save = 0
-endif
 
 if !exists("g:auto_save_silent")
   let g:auto_save_silent = 0
@@ -43,14 +40,19 @@ endif
 augroup auto_save
   autocmd!
   for event in g:auto_save_events
-    execute "au " . event . " * nested call AutoSave()"
+	  " TODO see http://vim.wikia.com/wiki/Run_a_command_in_multiple_buffers
+	  " bufdo
+    execute "au " . event . " * nested  call AutoSave()"
   endfor
 augroup END
 
 command! AutoSaveToggle :call AutoSaveToggle()
 
 function! AutoSave()
-  if g:auto_save >= 1
+  if !exists("b:auto_save")
+	let b:auto_save = 0
+  endif
+  if b:auto_save >= 1
     let was_modified = &modified
 
     " preserve marks that are used to remember start and 
@@ -81,11 +83,14 @@ function! DoSave()
 endfunction
 
 function! AutoSaveToggle()
-  if g:auto_save >= 1
-    let g:auto_save = 0
+  if !exists("b:auto_save")
+	let b:auto_save = 0
+  endif
+  if b:auto_save >= 1
+    let b:auto_save = 0
     echo "AutoSave is OFF"
   else
-    let g:auto_save = 1
+    let b:auto_save = 1
     echo "AutoSave is ON"
   endif
 endfunction
