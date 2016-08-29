@@ -42,13 +42,22 @@ augroup auto_save
   for event in g:auto_save_events
 	  " TODO see http://vim.wikia.com/wiki/Run_a_command_in_multiple_buffers
 	  " bufdo
-    execute "au " . event . " * nested  call AutoSave()"
+	  " or http://vimdoc.sourceforge.net/htmldoc/autocmd.html#autocmd-buflocal
+	  " nested => triggers Write/Read events
+    execute "au " . event . " * nested  call RunAutoSaveOnBuffers()"
   endfor
 augroup END
 
+
 command! AutoSaveToggle :call AutoSaveToggle()
 
-function! AutoSave()
+function! RunAutoSaveOnBuffers()
+	let currBuff=bufnr("%")
+	execute 'bufdo '.AutoSaveCurrentBuffer()
+	execute 'buffer '.currBuff
+endfunction
+
+function! AutoSaveCurrentBuffer()
   if !exists("b:auto_save")
 	let b:auto_save = 0
   endif
