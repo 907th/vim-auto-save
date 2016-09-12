@@ -7,15 +7,14 @@ CONTENTS                                                      *auto-save-content
 2. Installation...........................................|auto-save-installation|
 3. Usage.........................................................|auto-save-usage|
 4. Options.....................................................|auto-save-options|
-    4.1. On Startup.........................................|auto-save-on_startup|
+    4.1. Enable on Startup...........................|auto-save-enable_on_startup|
     4.2. Silent.................................................|auto-save-silent|
     4.3. Events.................................................|auto-save-events|
     4.4. Postsave Hook...................................|auto-save-postsave_hook|
-    4.5. Keep Marks.........................................|auto-save-keep_marks|
-    4.6. Write to All Buffers.....................|auto-save-write_to_all_buffers|
-5. Contribution...........................................|auto-save-contribution|
-    5.1. Development.......................................|auto-save-development|
-6. License.....................................................|auto-save-license|
+    4.5. Write to All Buffers.....................|auto-save-write_to_all_buffers|
+5. Development.............................................|auto-save-development|
+6. Contribution or Bug Report...............|auto-save-contribution_or_bug_report|
+7. License.....................................................|auto-save-license|
 
 ================================================================================
 DESCRIPTION                                                *auto-save-description*
@@ -47,7 +46,7 @@ AutoSave is disabled by default, run `:AutoSaveToggle` to enable/disable it.
 OPTIONS                                                        *auto-save-options*
 
 --------------------------------------------------------------------------------
-ON STARTUP                                                  *auto-save-on_startup*
+ENABLE ON STARTUP                                    *auto-save-enable_on_startup*
 
 If you want the plugin to be enabled on startup use the `g:auto_save` option.
 >
@@ -58,9 +57,9 @@ If you want the plugin to be enabled on startup use the `g:auto_save` option.
 --------------------------------------------------------------------------------
 SILENT                                                          *auto-save-silent*
 
-AutoSave will display on the status line on each auto-save by default.
+AutoSave will display on the status line on each auto-save by default:
 >
-    (AutoSaved at 08:40:55)
+    (AutoSave) saved at 08:40:55
 <
 
 You can silence the display with the `g:auto_save_silent` option:
@@ -106,24 +105,6 @@ If you need an autosave hook (such as generating tags post-save) then use
 <
 
 --------------------------------------------------------------------------------
-KEEP MARKS                                                  *auto-save-keep_marks*
-
-The `g:auto_save_keep_marks` option preserves marks that are used to remember start
-and end position of the last changed or yanked text ().
-This also fixes the behavior for common mappings that depend on these marks,
-like the selecting your pasted text (http://vim.wikia.com/wiki/Selecting_your_pasted_text)
-mapping.
-This options default value is `1`. Without it, the mapping will select the
-whole buffer, because a write operation sets the `'[` and `']` marks
-respectively to the start and end of the buffer. If you
-want vims default behavior, set the options value to 0:
->
-    let g:auto_save_keep_marks = 0 " Don't keep the '[ and '] marks. It will break
-                                   " the selecting your pasted text mapping:
-                                   " http://vim.wikia.com/wiki/Selecting_your_pasted_text
-<
-
---------------------------------------------------------------------------------
 WRITE TO ALL BUFFERS                              *auto-save-write_to_all_buffers*
 
 By default only the current buffer is written (like `:w`). You can choose that
@@ -136,12 +117,6 @@ option (like `:wa`).
 <
 
 ================================================================================
-CONTRIBUTION                                              *auto-save-contribution*
-
-Development is made in 907th/vim-auto-save (https://github.com/907th/vim-auto-save) repo.
-Feel free to contribute!
-
---------------------------------------------------------------------------------
 DEVELOPMENT                                                *auto-save-development*
 
 The `doc/auto-save.txt` is a converted version of the `README.md`. Don't edit
@@ -149,9 +124,15 @@ it directly. Instead install the md2vim (https://github.com/FooSoft/md2vim) and
 run the `update_doc_from_readme.sh` script.
 
 ================================================================================
+CONTRIBUTION OR BUG REPORT                  *auto-save-contribution_or_bug_report*
+
+Development is made in 907th/vim-auto-save (https://github.com/907th/vim-auto-save) repo.
+Please, report any bugs and/or suggestions there. Any contrubution is welcomed!
+
+================================================================================
 LICENSE                                                        *auto-save-license*
 
 Distributed under the MIT License (see LICENSE.txt).
 
-Copyright (c) 2013-2015 Alexey Chernenkov
+Copyright (c) 2013-2016 Alexey Chernenkov
 

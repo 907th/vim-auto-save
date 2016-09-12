@@ -9,7 +9,8 @@ Inspired by the same feature in RubyMine text editor.
 By default AutoSave will save every time something has been changed in normal
 mode and when the user leaves insert mode. This configuration is a mix between
 "save as often as possible" and "try to avoid breaking other plugins that depend
-on filewrite-events". 
+on filewrite-events".
+
 
 # Installation
 
@@ -17,14 +18,15 @@ Use [vundle](https://github.com/gmarik/vundle) or
 download [packaged version](http://www.vim.org/scripts/script.php?script_id=4521)
 from vim.org.
 
+
 # Usage
 
-AutoSave is disabled by default, run `:AutoSaveToggle` to enable/disable it.  
+AutoSave is disabled by default, run `:AutoSaveToggle` to enable/disable it.
 
 
 # Options
 
-## On Startup
+## Enable on Startup
 
 If you want the plugin to be enabled on startup use the `g:auto_save` option.
 
@@ -36,10 +38,10 @@ let g:auto_save = 1  " enable AutoSave on Vim startup
 
 ## Silent
 
-AutoSave will display on the status line on each auto-save by default.
+AutoSave will display on the status line on each auto-save by default:
 
 ```
-(AutoSaved at 08:40:55)
+(AutoSave) saved at 08:40:55
 ```
 
 You can silence the display with the `g:auto_save_silent` option:
@@ -61,13 +63,13 @@ let g:auto_save_events = ["InsertLeave", "TextChanged"]
 ```
 
 Using `CursorHold` will additionally save every amount of milliseconds as
-defined in the `updatetime` option in normal mode. `CursorHoldI` will do the 
+defined in the `updatetime` option in normal mode. `CursorHoldI` will do the
 same thing in insert mode. `CompleteDone` will also trigger a save after every
-completion event. See the autocommands overview for a complete listing 
+completion event. See the autocommands overview for a complete listing
 (`:h autocommand-events`).
 
-Be advised to be careful with the `updatetime` option since it has shown to 
-cause problems when set too small. 200 seems already to be too small to work 
+Be advised to be careful with the `updatetime` option since it has shown to
+cause problems when set too small. 200 seems already to be too small to work
 with certain other plugins. Use 1000 for a more conservative setting.
 
 ```.VimL
@@ -99,19 +101,22 @@ let g:auto_save_write_all_buffers = 1 " Setting this option to 1 will write all
                                       " :wa on the vim command line.
 ```
 
-# Contribution
 
-Development is made in [907th/vim-auto-save](https://github.com/907th/vim-auto-save) repo.  
-Feel free to contribute!
-
-## Development
+# Development
 
 The `doc/auto-save.txt` is a converted version of the `README.md`. Don't edit
 it directly. Instead install the [md2vim](https://github.com/FooSoft/md2vim) and
 run the `update_doc_from_readme.sh` script.
 
+
+# Contribution or Bug Report
+
+Development is made in [907th/vim-auto-save](https://github.com/907th/vim-auto-save) repo.
+Please, report any bugs and/or suggestions there. Any contrubution is welcomed!
+
+
 # License
 
 Distributed under the MIT License (see LICENSE.txt).
 
-Copyright (c) 2013-2015 Alexey Chernenkov
+Copyright (c) 2013-2016 Alexey Chernenkov
