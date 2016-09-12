@@ -1,7 +1,7 @@
 "======================================
 "    Script Name:  vim-auto-save (http://www.vim.org/scripts/script.php?script_id=4521)
 "    Plugin Name:  AutoSave
-"        Version:  0.1.7
+"        Version:  0.1.8
 "======================================
 
 if exists("g:auto_save_loaded")
@@ -21,24 +21,26 @@ if !exists("g:auto_save_silent")
   let g:auto_save_silent = 0
 endif
 
-if !exists("g:auto_save_events")
-  let g:auto_save_events = [ "InsertLeave", "TextChanged" ]
-endif
-
 if !exists("g:auto_save_write_all_buffers")
   let g:auto_save_write_all_buffers = 0
 endif
 
-"Check if user added the CompleteDone event which is known to
-"cause problems for certain vim versions.
-if !(v:version > 703 || v:version == 703 && has('patch598'))
-  let completeDoneIndex = index(g:auto_save_events,"CompleteDone")
-  if (completeDoneIndex >= 0)
-    call remove(g:auto_save_events,completeDoneIndex)
-    echo "(AutoSave) Save on CompleteDone is not supported for your vim version."
-    echo "(AutoSave) CompleteDone was removed from g:auto_save_events variable."
-  endif
+if !exists("g:auto_save_events")
+  let g:auto_save_events = ["InsertLeave", "TextChanged"]
 endif
+
+" Check all used events exists
+for event in g:auto_save_events
+  if !exists("##" . event)
+    let eventIndex = index(g:auto_save_events, event)
+    if (eventIndex >= 0)
+      call remove(g:auto_save_events, eventIndex)
+      echo "(AutoSave) Save on " . event . " event is not supported for your Vim version!"
+      echo "(AutoSave) " . event . " was removed from g:auto_save_events variable."
+      echo "(AutoSave) Please, upgrade your Vim to a newer version or use other events in g:auto_save_events!"
+    endif
+  endif
+endfor
 
 augroup auto_save
   autocmd!
@@ -53,7 +55,7 @@ function! AutoSave()
   if g:auto_save >= 1
     let was_modified = &modified
 
-    " preserve marks that are used to remember start and 
+    " Preserve marks that are used to remember start and
     " end position of the last changed or yanked text (`:h '[`).
     let first_char_pos = getpos("'[")
     let last_char_pos = getpos("']")
@@ -66,7 +68,7 @@ function! AutoSave()
         execute "" . g:auto_save_postsave_hook
       endif
       if g:auto_save_silent == 0
-        echo "(AutoSaved at " . strftime("%H:%M:%S") . ")"
+        echo "(AutoSave) saved at " . strftime("%H:%M:%S")
       endif
     endif
   endif
@@ -83,10 +85,10 @@ endfunction
 function! AutoSaveToggle()
   if g:auto_save >= 1
     let g:auto_save = 0
-    echo "AutoSave is OFF"
+    echo "(AutoSave) OFF"
   else
     let g:auto_save = 1
-    echo "AutoSave is ON"
+    echo "(AutoSave) ON"
   endif
 endfunction
 
