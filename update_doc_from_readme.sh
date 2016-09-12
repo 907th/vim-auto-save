@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $SCRIPT_DIR
@@ -15,4 +15,6 @@ else
     exit 1
 fi
 
-exec "$md2vim_bin" -desc "AutoSave              *vim-auto-save* *auto-save*" README.md doc/auto-save.txt
+echo "Building documentation"
+$md2vim_bin -desc "*AutoSave* *auto-save* *vim-auto-save*" README.md doc/auto-save.txt
+echo "Done"

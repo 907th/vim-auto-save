@@ -1,4 +1,4 @@
-auto-save.txt                  AutoSave              *vim-auto-save* *auto-save*
+auto-save.txt                             *AutoSave* *auto-save* *vim-auto-save*
 
 ================================================================================
 CONTENTS                                                      *auto-save-contents*
