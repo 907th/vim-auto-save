@@ -101,7 +101,8 @@ let g:auto_save_postsave_hook = 'TagsGenerate'  " this will run :TagsGenerate
 
 By default only the current buffer is written (like `:w`). You can choose that
 all buffers are written on autosave using the `g:auto_save_write_all_buffers`
-option (like `:wa`).
+option (like `:wa`). Keep in mind that writing to all buffers when the  `g:auto_save_only_git` is enabled, will save all buffers, not just the 
+the source controlled files.
 
 ```VimL
 let g:auto_save_write_all_buffers = 1 " Setting this option to 1 will write all
