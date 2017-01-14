@@ -17,6 +17,11 @@ if !exists("g:auto_save")
   let g:auto_save = 0
 endif
 
+if !exists("g:auto_save_enabled")
+  " this variable can be overriden by git pre save hooks
+  let g:auto_save_enabled = 1
+endif
+
 if !exists("g:auto_save_silent")
   let g:auto_save_silent = 0
 endif
@@ -52,23 +57,29 @@ augroup END
 command! AutoSaveToggle :call AutoSaveToggle()
 
 function! AutoSave()
-  if g:auto_save >= 1
-    let was_modified = &modified
 
-    " Preserve marks that are used to remember start and
-    " end position of the last changed or yanked text (`:h '[`).
-    let first_char_pos = getpos("'[")
-    let last_char_pos = getpos("']")
-    call DoSave()
-    call setpos("'[", first_char_pos)
-    call setpos("']", last_char_pos)
+  if exists("g:auto_save_presave_hook")
+    execute "" . g:auto_save_presave_hook
+  endif
+  if g:auto_save_enabled == 1
+    if g:auto_save >= 1
+      let was_modified = &modified
 
-    if was_modified && !&modified
-      if exists("g:auto_save_postsave_hook")
-        execute "" . g:auto_save_postsave_hook
-      endif
-      if g:auto_save_silent == 0
-        echo "(AutoSave) saved at " . strftime("%H:%M:%S")
+      " Preserve marks that are used to remember start and
+      " end position of the last changed or yanked text (`:h '[`).
+      let first_char_pos = getpos("'[")
+      let last_char_pos = getpos("']")
+      call DoSave()
+      call setpos("'[", first_char_pos)
+      call setpos("']", last_char_pos)
+
+      if was_modified && !&modified
+        if exists("g:auto_save_postsave_hook")
+          execute "" . g:auto_save_postsave_hook
+        endif
+        if g:auto_save_silent == 0
+          echo "(AutoSave) saved at " . strftime("%H:%M:%S")
+        endif
       endif
     endif
   endif

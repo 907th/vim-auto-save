@@ -80,13 +80,15 @@ let g:auto_save_events = [ "CursorHold", "CursorHoldI", "CompleteDone", "InsertL
 
 ## Postsave Hook
 
-If you need an autosave hook (such as generating tags post-save) then use
-`g:auto_save_postsave_hook` option:
+If you need an autosave hook (such as generating tags post-save, or aborting the save if the file is not version controlled) then use
+`g:auto_save_postsave_hook` or `g:auto_save_presave_hook` options:
 
 ```VimL
 " .vimrc
-let g:auto_save_postsave_hook = 'TagsGenerate'  " this will run :TagsGenerate
-                                                " after each save
+let g:auto_save_postsave_hook = 'TagsGenerate'            " this will run :TagsGenerate
+                                                          " after each save
+let g:auto_save_presave_hook = 'AbortIfNotGitDirectory'   " this will run :AbortIfNotGitDirectory
+                                                          " before each save when using the vim-auto-save-git-hook plugin
 ```
 
 ## Write to All Buffers
