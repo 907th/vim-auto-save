@@ -90,7 +90,7 @@ then use `g:auto_save_postsave_hook` or `g:auto_save_presave_hook` options:
 " This will run :TagsGenerate after each save
 let g:auto_save_postsave_hook = 'TagsGenerate'
 
-" This will run :AbortIfNotGitDirectory before each save
+" This will run AbortIfNotGitDirectory function before each save
 let g:auto_save_presave_hook = 'call AbortIfNotGitDirectory()'
 
 " Example hook from vim-auto-save-git-hook plugin
