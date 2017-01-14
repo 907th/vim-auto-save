@@ -17,6 +17,11 @@ if !exists("g:auto_save")
   let g:auto_save = 0
 endif
 
+if !exists("g:auto_save_enabled")
+  " this variable can be overriden by git pre save hooks
+  let g:auto_save_enabled = 1
+endif
+
 if !exists("g:auto_save_silent")
   let g:auto_save_silent = 0
 endif
