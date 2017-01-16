@@ -79,7 +79,7 @@ set updatetime=200  " Dangerous!
 let g:auto_save_events = ["CursorHold", "CursorHoldI", "CompleteDone", "InsertLeave"]
 ```
 
-## Postsave Hook
+## (Pre/Post)save Hooks
 
 If you need an autosave hook (such as generating tags post-save, or aborting the save earlier)
 then use `g:auto_save_postsave_hook` or `g:auto_save_presave_hook` options:
