@@ -21,6 +21,10 @@ if !exists("g:auto_save_silent")
   let g:auto_save_silent = 0
 endif
 
+if !exists("g:auto_save_noautocmd")
+  let g:auto_save_noautocmd = 0
+endif
+
 if !exists("g:auto_save_write_all_buffers")
   let g:auto_save_write_all_buffers = 0
 endif
@@ -88,11 +92,17 @@ function! AutoSave()
 endfunction
 
 function! DoSave()
-  if g:auto_save_write_all_buffers >= 1
-    silent! wa
-  else
-    silent! w
+  let l:write_cmd = ""
+  if g:auto_save_noautocmd >= 1
+    let l:write_cmd .= "noautocmd" . " "
   endif
+
+  let l:write_cmd .= "silent! w"
+  if g:auto_save_write_all_buffers >= 1
+    let l:write_cmd .= "a"
+  endif
+
+  execute l:write_cmd
 endfunction
 
 function! AutoSaveToggle()
@@ -107,3 +117,5 @@ endfunction
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
+
+" vim:sw=2:ts=2:
