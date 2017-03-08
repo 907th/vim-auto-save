@@ -13,6 +13,9 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
+if !exists("g:auto_save")
+  let g:auto_save = 0
+endif
 
 if !exists("g:auto_save_silent")
   let g:auto_save_silent = 0
@@ -25,6 +28,15 @@ endif
 if !exists("g:auto_save_write_all_buffers")
   let g:auto_save_write_all_buffers = 0
 endif
+
+" Like bufdo but restore the current buffer.
+function! s:BufDo(command)
+  let currBuff=bufnr("%")
+  " todo add silent ?
+  execute 'bufdo ' . a:command
+  execute 'buffer ' . currBuff
+endfunction
+" com! -nargs=+ -complete=command Bufdo call BufDo(<q-args>)
 
 "Check if user added the CompleteDone event which is known to
 "cause problems for certain vim versions.
@@ -40,35 +52,46 @@ endif
 augroup auto_save
   autocmd!
   for event in g:auto_save_events
-	  " TODO see http://vim.wikia.com/wiki/Run_a_command_in_multiple_buffers
-	  " bufdo
-	  " or http://vimdoc.sourceforge.net/htmldoc/autocmd.html#autocmd-buflocal
-	  " nested => triggers Write/Read events
-    execute "au " . event . " * nested  call RunAutoSaveOnBuffers()"
+      " TODO see http://vim.wikia.com/wiki/Run_a_command_in_multiple_buffers
+      " bufdo
+      " or http://vimdoc.sourceforge.net/htmldoc/autocmd.html#autocmd-buflocal
+      " nested => triggers Write/Read events
+    execute "au " . event . " * nested  call AutoSaveRun()"
   endfor
 augroup END
 
 
-command! AutoSaveToggle :call AutoSaveToggle()
+command! AutoSaveToggleLocal :call AutoSaveToggleLocal()
+command! AutoSaveToggleGlobal :call AutoSaveToggleGlobal()
+command! AutoSaveCurrentBuffer :call AutoSaveCurrentBuffer()
 
-function! RunAutoSaveOnBuffers()
-	let currBuff=bufnr("%")
-	execute 'bufdo '.AutoSaveCurrentBuffer()
-	execute 'buffer '.currBuff
-endfunction
+" function! AutoSaveBuffer()
+"     if ShouldItBeSaved()
+"         write
+"     endif
+" endfunc
+
+function! AutoSaveRun()
+    call s:BufDo('call AutoSaveCurrentBuffer()')
+endfunc
+
+function! s:ShouldItBeSaved()
+    return (g:auto_save == 2) || (g:auto_save == 1 && get(b:, 'auto_save', 0))
+endfunc
 
 function! AutoSaveCurrentBuffer()
-  if !exists("b:auto_save")
-	let b:auto_save = 0
-  endif
-  if b:auto_save >= 1
+  " if !exists("b:auto_save")
+  "   let b:auto_save = 0
+  " endif
+  if s:ShouldItBeSaved()
     let was_modified = &modified
 
     " preserve marks that are used to remember start and 
     " end position of the last changed or yanked text (`:h '[`).
     let first_char_pos = getpos("'[")
     let last_char_pos = getpos("']")
-    call DoSave()
+    " call DoSave()
+    silent! w
     call setpos("'[", first_char_pos)
     call setpos("']", last_char_pos)
 
@@ -83,25 +106,31 @@ function! AutoSaveCurrentBuffer()
   endif
 endfunction
 
-function! DoSave()
-  if g:auto_save_write_all_buffers >= 1
-    silent! wa
-  else
-    silent! w
-  endif
+function! AutoSaveStatus()
+    if s:ShouldItBeSaved()
+        return "ON"
+    else
+        return "OFF"
+    endif
+endfunc
+
+function! AutoSaveToggleGlobal()
+    let g:auto_save += 1
+    if g:auto_save > 2
+        g:auto_save = 0
+    endif
 endfunction
 
-function! AutoSaveToggle()
-  if !exists("b:auto_save")
-	let b:auto_save = 0
-  endif
-  if b:auto_save >= 1
-    let b:auto_save = 0
-    echo "AutoSave is OFF"
-  else
-    let b:auto_save = 1
-    echo "AutoSave is ON"
-  endif
+function! AutoSaveToggleLocal()
+
+    let b:auto_save = get(b:, "auto_save", get(g:, "auto_save"))
+    if b:auto_save
+        let b:auto_save = v:false
+    else
+        let b:auto_save = v:true
+    endif
+
+  echo "AutoSave is ". AutoSaveStatus()
 endfunction
 
 let &cpo = s:save_cpo
