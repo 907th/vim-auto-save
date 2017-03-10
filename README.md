@@ -33,7 +33,6 @@ If you want the plugin to be enabled on startup use the `g:auto_save` option.
 ```VimL
 " .vimrc
 let g:auto_save = 1  " enable AutoSave on Vim startup
-
 ```
 
 ## Silent
@@ -49,7 +48,6 @@ You can silence the display with the `g:auto_save_silent` option:
 ```VimL
 " .vimrc
 let g:auto_save_silent = 1  " do not display the auto-save notification
-
 ```
 
 ## Events
@@ -63,21 +61,19 @@ the default, will save on every change in normal mode and every time you leave i
 let g:auto_save_events = ["InsertLeave", "TextChanged"]
 ```
 
-Using `CursorHold` will additionally save every amount of milliseconds as
-defined in the `updatetime` option in normal mode. `CursorHoldI` will do the
-same thing in insert mode. `CompleteDone` will also trigger a save after every
-completion event. See the autocommands overview for a complete listing
-(`:h autocommand-events`).
+Other events you may want to use:
 
-Be advised to be careful with the `updatetime` option since it has shown to
+- `TextChangedI` will save after a change was made to the text in the current buffer in insert mode.
+- `CursorHold` will save every amount of milliseconds as defined in the `updatetime` option in normal mode.
+- `CursorHoldI` will do the same thing in insert mode.
+- `CompleteDone` will also trigger a save after every completion event.
+
+Some of these commands may not be available, depending on your Vim installation.
+See the autocommands overview for a complete listing (`:h autocommand-events`).
+
+**Warning!** Be advised to be careful with the `updatetime` option since it has shown to
 cause problems when set too small. 200 seems already to be too small to work
 with certain other plugins. Use 1000 for a more conservative setting.
-
-```VimL
-" .vimrc
-set updatetime=200  " Dangerous!
-let g:auto_save_events = ["CursorHold", "CursorHoldI", "CompleteDone", "InsertLeave"]
-```
 
 ## (Pre/Post)save Hooks
 
