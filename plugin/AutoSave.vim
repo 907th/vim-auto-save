@@ -1,7 +1,7 @@
 "======================================
 "    Script Name:  vim-auto-save (http://www.vim.org/scripts/script.php?script_id=4521)
 "    Plugin Name:  AutoSave
-"        Version:  0.1.9
+"        Version:  0.1.10
 "======================================
 
 if exists("g:auto_save_loaded")
@@ -49,10 +49,15 @@ augroup auto_save
   endfor
 augroup END
 
-command! AutoSaveToggle :call AutoSaveToggle()
+command AutoSaveToggle :call AutoSaveToggle()
 
-function! AutoSave()
+function AutoSave()
   if g:auto_save == 0
+    return
+  end
+
+  let was_modified = s:IsModified()
+  if !was_modified
     return
   end
 
@@ -63,8 +68,6 @@ function! AutoSave()
       return
     endif
   endif
-
-  let was_modified = &modified
 
   " Preserve marks that are used to remember start and
   " end position of the last changed or yanked text (`:h '[`).
@@ -87,7 +90,17 @@ function! AutoSave()
   endif
 endfunction
 
-function! DoSave()
+function s:IsModified()
+  if g:auto_save_write_all_buffers >= 1
+    let buffers = filter(range(1, bufnr('$')), 'bufexists(v:val)')
+    call filter(buffers, 'getbufvar(v:val, "&modified")')
+    return len(buffers) > 0
+  else
+    return &modified
+  endif
+endfunction
+
+function DoSave()
   if g:auto_save_write_all_buffers >= 1
     silent! wa
   else
@@ -95,7 +108,7 @@ function! DoSave()
   endif
 endfunction
 
-function! AutoSaveToggle()
+function AutoSaveToggle()
   if g:auto_save >= 1
     let g:auto_save = 0
     echo "(AutoSave) OFF"
