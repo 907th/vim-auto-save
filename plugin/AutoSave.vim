@@ -52,7 +52,7 @@ augroup END
 command AutoSaveToggle :call AutoSaveToggle()
 
 function AutoSave()
-  if g:auto_save == 0
+  if g:auto_save == 0 && (!exists("b:auto_save") || b:auto_save==0)
     return
   end
 
