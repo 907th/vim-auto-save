@@ -10,7 +10,7 @@ CONTENTS                                                      *auto-save-content
     4.1. Enable on Startup...........................|auto-save-enable_on_startup|
     4.2. Silent.................................................|auto-save-silent|
     4.3. Events.................................................|auto-save-events|
-    4.4. Postsave Hook...................................|auto-save-postsave_hook|
+    4.4. (Pre/Post)save Hooks.....................|auto-save-(pre/post)save_hooks|
     4.5. Write to All Buffers.....................|auto-save-write_to_all_buffers|
 5. Development.............................................|auto-save-development|
 6. Contribution or Bug Report...............|auto-save-contribution_or_bug_report|
@@ -79,23 +79,22 @@ the default, will save on every change in normal mode and every time you leave i
     let g:auto_save_events = ["InsertLeave", "TextChanged"]
 <
 
-Using `CursorHold` will additionally save every amount of milliseconds as
-defined in the `updatetime` option in normal mode. `CursorHoldI` will do the
-same thing in insert mode. `CompleteDone` will also trigger a save after every
-completion event. See the autocommands overview for a complete listing
-().
+Other events you may want to use:
 
-Be advised to be careful with the `updatetime` option since it has shown to
+*   `TextChangedI` will save after a change was made to the text in the current buffer in insert mode.
+*   `CursorHold` will save every amount of milliseconds as defined in the `updatetime` option in normal mode.
+*   `CursorHoldI` will do the same thing in insert mode.
+*   `CompleteDone` will also trigger a save after every completion event.
+
+Some of these commands may not be available, depending on your Vim installation.
+See the autocommands overview for a complete listing ().
+
+Warning! Be advised to be careful with the `updatetime` option since it has shown to
 cause problems when set too small. 200 seems already to be too small to work
 with certain other plugins. Use 1000 for a more conservative setting.
->
-    " .vimrc
-    set updatetime=200  " Dangerous!
-    let g:auto_save_events = ["CursorHold", "CursorHoldI", "CompleteDone", "InsertLeave"]
-<
 
 --------------------------------------------------------------------------------
-POSTSAVE HOOK                                            *auto-save-postsave_hook*
+(PRE/POST)SAVE HOOKS                              *auto-save-(pre/post)save_hooks*
 
 If you need an autosave hook (such as generating tags post-save, or aborting the save earlier)
 then use `g:auto_save_postsave_hook` or `g:auto_save_presave_hook` options:
@@ -103,7 +102,7 @@ then use `g:auto_save_postsave_hook` or `g:auto_save_presave_hook` options:
     " .vimrc
     " This will run :TagsGenerate after each save
     let g:auto_save_postsave_hook = 'TagsGenerate'
-    " This will run :AbortIfNotGitDirectory before each save
+    " This will run AbortIfNotGitDirectory function before each save
     let g:auto_save_presave_hook = 'call AbortIfNotGitDirectory()'
     " Example hook from vim-auto-save-git-hook plugin
     function! AbortIfNotGitDirectory()

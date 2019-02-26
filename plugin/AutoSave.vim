@@ -1,7 +1,7 @@
 "======================================
 "    Script Name:  vim-auto-save (http://www.vim.org/scripts/script.php?script_id=4521)
 "    Plugin Name:  AutoSave
-"        Version:  0.1.10
+"        Version:  0.1.11
 "======================================
 
 if exists("g:auto_save_loaded")
@@ -52,7 +52,7 @@ augroup END
 command AutoSaveToggle :call AutoSaveToggle()
 
 function AutoSave()
-  if g:auto_save == 0 && (!exists("b:auto_save") || b:auto_save==0)
+  if g:auto_save == 0 && (!exists("b:auto_save") || b:auto_save == 0)
     return
   end
 
