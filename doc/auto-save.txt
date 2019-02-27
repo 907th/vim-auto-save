@@ -8,10 +8,11 @@ CONTENTS                                                      *auto-save-content
 3. Usage.........................................................|auto-save-usage|
 4. Options.....................................................|auto-save-options|
     4.1. Enable on Startup...........................|auto-save-enable_on_startup|
-    4.2. Silent.................................................|auto-save-silent|
-    4.3. Events.................................................|auto-save-events|
-    4.4. Postsave Hook...................................|auto-save-postsave_hook|
-    4.5. Write to All Buffers.....................|auto-save-write_to_all_buffers|
+    4.2. Enable for Buffer...........................|auto-save-enable_for_buffer|
+    4.3. Silent.................................................|auto-save-silent|
+    4.4. Events.................................................|auto-save-events|
+    4.5. Postsave Hook...................................|auto-save-postsave_hook|
+    4.6. Write to All Buffers.....................|auto-save-write_to_all_buffers|
 5. Development.............................................|auto-save-development|
 6. Contribution or Bug Report...............|auto-save-contribution_or_bug_report|
 7. License.....................................................|auto-save-license|
@@ -52,6 +53,19 @@ If you want the plugin to be enabled on startup use the `g:auto_save` option.
 >
     " .vimrc
     let g:auto_save = 1  " enable AutoSave on Vim startup
+<
+
+--------------------------------------------------------------------------------
+ENABLE FOR BUFFER                                      *auto-save-enable_for_buffer*
+
+If you want the plugin to be enabled for a specific buffer use the `b:auto_save` option.
+>
+    " .vimrc
+    augroup todo
+      autocmd!
+      " enable AutoSave for todo buffers
+      autocmd filetype todo let b:auto_save = 1
+    augroup END
 <
 
 --------------------------------------------------------------------------------
