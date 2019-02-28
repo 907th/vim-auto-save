@@ -35,6 +35,19 @@ If you want the plugin to be enabled on startup use the `g:auto_save` option.
 let g:auto_save = 1  " enable AutoSave on Vim startup
 ```
 
+## Enable for Buffer
+
+If you want the plugin to be enabled for a specific buffer use the `b:auto_save` option.
+
+```VimL
+" .vimrc
+augroup todo
+autocmd!
+  " enable AutoSave for todo buffers
+  autocmd filetype todo let b:auto_save = 1
+augroup END
+```
+
 ## Silent
 
 AutoSave will display on the status line on each auto-save by default:

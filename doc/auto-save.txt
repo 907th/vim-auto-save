@@ -8,10 +8,11 @@ CONTENTS                                                      *auto-save-content
 3. Usage.........................................................|auto-save-usage|
 4. Options.....................................................|auto-save-options|
     4.1. Enable on Startup...........................|auto-save-enable_on_startup|
-    4.2. Silent.................................................|auto-save-silent|
-    4.3. Events.................................................|auto-save-events|
-    4.4. Postsave Hook...................................|auto-save-postsave_hook|
-    4.5. Write to All Buffers.....................|auto-save-write_to_all_buffers|
+    4.2. Enable for Buffer...........................|auto-save-enable_for_buffer|
+    4.3. Silent.................................................|auto-save-silent|
+    4.4. Events.................................................|auto-save-events|
+    4.5. (Pre/Post)save Hooks.....................|auto-save-(pre/post)save_hooks|
+    4.6. Write to All Buffers.....................|auto-save-write_to_all_buffers|
 5. Development.............................................|auto-save-development|
 6. Contribution or Bug Report...............|auto-save-contribution_or_bug_report|
 7. License.....................................................|auto-save-license|
@@ -55,6 +56,19 @@ If you want the plugin to be enabled on startup use the `g:auto_save` option.
 <
 
 --------------------------------------------------------------------------------
+ENABLE FOR BUFFER                                    *auto-save-enable_for_buffer*
+
+If you want the plugin to be enabled for a specific buffer use the `b:auto_save` option.
+>
+    " .vimrc
+    augroup todo
+    autocmd!
+      " enable AutoSave for todo buffers
+      autocmd filetype todo let b:auto_save = 1
+    augroup END
+<
+
+--------------------------------------------------------------------------------
 SILENT                                                          *auto-save-silent*
 
 AutoSave will display on the status line on each auto-save by default:
@@ -79,23 +93,22 @@ the default, will save on every change in normal mode and every time you leave i
     let g:auto_save_events = ["InsertLeave", "TextChanged"]
 <
 
-Using `CursorHold` will additionally save every amount of milliseconds as
-defined in the `updatetime` option in normal mode. `CursorHoldI` will do the
-same thing in insert mode. `CompleteDone` will also trigger a save after every
-completion event. See the autocommands overview for a complete listing
-().
+Other events you may want to use:
 
-Be advised to be careful with the `updatetime` option since it has shown to
+*   `TextChangedI` will save after a change was made to the text in the current buffer in insert mode.
+*   `CursorHold` will save every amount of milliseconds as defined in the `updatetime` option in normal mode.
+*   `CursorHoldI` will do the same thing in insert mode.
+*   `CompleteDone` will also trigger a save after every completion event.
+
+Some of these commands may not be available, depending on your Vim installation.
+See the autocommands overview for a complete listing ().
+
+Warning! Be advised to be careful with the `updatetime` option since it has shown to
 cause problems when set too small. 200 seems already to be too small to work
 with certain other plugins. Use 1000 for a more conservative setting.
->
-    " .vimrc
-    set updatetime=200  " Dangerous!
-    let g:auto_save_events = ["CursorHold", "CursorHoldI", "CompleteDone", "InsertLeave"]
-<
 
 --------------------------------------------------------------------------------
-POSTSAVE HOOK                                            *auto-save-postsave_hook*
+(PRE/POST)SAVE HOOKS                              *auto-save-(pre/post)save_hooks*
 
 If you need an autosave hook (such as generating tags post-save, or aborting the save earlier)
 then use `g:auto_save_postsave_hook` or `g:auto_save_presave_hook` options:
@@ -103,7 +116,7 @@ then use `g:auto_save_postsave_hook` or `g:auto_save_presave_hook` options:
     " .vimrc
     " This will run :TagsGenerate after each save
     let g:auto_save_postsave_hook = 'TagsGenerate'
-    " This will run :AbortIfNotGitDirectory before each save
+    " This will run AbortIfNotGitDirectory function before each save
     let g:auto_save_presave_hook = 'call AbortIfNotGitDirectory()'
     " Example hook from vim-auto-save-git-hook plugin
     function! AbortIfNotGitDirectory()
