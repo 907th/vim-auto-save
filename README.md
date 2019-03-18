@@ -35,6 +35,16 @@ If you want the plugin to be enabled on startup use the `g:auto_save` option.
 let g:auto_save = 1  " enable AutoSave on Vim startup
 ```
 
+It's also possible to override global `g:auto_save` value individually per buffer or window. For example, if you have auto save enabled globally, you can opt out some files. And vice versa, opt in some files, when you have auto save disabled globally.
+
+```vim
+let g:auto_save = 0
+augroup ft_markdown
+  au!
+  au FileType markdown let b:auto_save = 1
+augroup END
+```
+
 ## Silent
 
 AutoSave will display on the status line on each auto-save by default:
