@@ -52,7 +52,7 @@ augroup END
 command AutoSaveToggle :call AutoSaveToggle()
 
 function AutoSave()
-  if g:auto_save == 0 && (!exists("b:auto_save") || b:auto_save == 0)
+  if s:GetVar('auto_save', 0) == 0
     return
   end
 
@@ -97,6 +97,23 @@ function s:IsModified()
     return len(buffers) > 0
   else
     return &modified
+  endif
+endfunction
+
+" Resolve variable value by climbing up window-buffer-global hierarchy
+" So, buffer-local or window-local variables override global ones
+" If not found on any level, fallbacks to default value or empty string
+function s:GetVar(...)
+  let varName = a:1
+
+  if exists('w:' . varName)
+    return w:{varName}
+  elseif exists('b:' . varName)
+    return b:{varName}
+  elseif exists('g:' . varName)
+    return g:{varName}
+  else
+    return exists('a:2') ? a:2 : ''
   endif
 endfunction
 
