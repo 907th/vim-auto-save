@@ -1,3 +1,9 @@
+# Call for Maintainer
+
+Dear users of this plugin! Sorry, but I no longer maintain it!
+If someone of you are interested in maintaining it,
+please, contact me and I will add you as a contributor.
+
 # Description
 
 AutoSave - automatically saves changes to disk without having to use `:w`
@@ -138,4 +144,4 @@ Please, report any bugs and/or suggestions there. Any contrubution is welcomed!
 
 Distributed under the MIT License (see LICENSE.txt).
 
-Copyright (c) 2013-2016 Alexey Chernenkov
+Copyright (c) 2013-2021 Aleksei Chernenkov
