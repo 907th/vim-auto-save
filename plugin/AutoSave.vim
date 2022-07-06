@@ -117,17 +117,13 @@ function s:GetVar(...)
   endif
 endfunction
 
-function! WriteUnsavedBuffers()
+function DoSave()
+  if g:auto_save_write_all_buffers >= 1
     let current_buf = bufnr('%')
     silent! bufdo update
     execute 'buffer' . current_buf
-endfunction
-
-function DoSave()
-  if g:auto_save_write_all_buffers >= 1
-    silent! call WriteUnsavedBuffers()
   else
-    silent! w
+    silent! update
   endif
 endfunction
 
