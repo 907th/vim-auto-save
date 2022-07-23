@@ -119,9 +119,11 @@ endfunction
 
 function DoSave()
   if g:auto_save_write_all_buffers >= 1
-    silent! wa
+    let current_buf = bufnr('%')
+    silent! bufdo update
+    execute 'buffer' . current_buf
   else
-    silent! w
+    silent! update
   endif
 endfunction
 
