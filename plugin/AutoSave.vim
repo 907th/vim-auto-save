@@ -1,7 +1,7 @@
 "======================================
 "    Script Name:  vim-auto-save (http://www.vim.org/scripts/script.php?script_id=4521)
 "    Plugin Name:  AutoSave
-"        Version:  0.1.12
+"        Version:  0.1.13
 "======================================
 
 if exists("g:auto_save_loaded")
@@ -74,7 +74,12 @@ function AutoSave()
   let first_char_pos = getpos("'[")
   let last_char_pos = getpos("']")
 
+  " Preserve the window view.
+  let window_view = winsaveview()
+
   call DoSave()
+
+  call winrestview(window_view)
 
   call setpos("'[", first_char_pos)
   call setpos("']", last_char_pos)
